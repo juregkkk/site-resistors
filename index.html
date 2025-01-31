@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código de Cores de Resistores</title>
+    <link rel="stylesheet" href="resistor.css">
+    
+</head>
+<body>
+
+    <header>
+        <h1>Código de Cores de Resistores</h1>
+    </header>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Modo Escuro</button>
+
+    <div class="container">
+        <h2>O que é um Resistor?</h2>
+        <p>Um resistor é um componente eletrônico que tem a função de limitar o fluxo de corrente elétrica em um circuito. A resistência de um resistor é medida em ohms (Ω) e pode ser identificada através de um código de cores.</p>
+
+        <h2>Digite o Valor da Resistência</h2>
+        <input type="number" id="resistanceValue" placeholder="Ex: 1000" min="1" aria-label="Digite o valor da resistência">
+        <select id="tolerance" aria-label="Selecione a tolerância">
+            <option value="1">±1% (Marrom)</option>
+            <option value="2">±2% (Vermelho)</option>
+            <option value="5" selected>±5% (Dourado)</option>
+            <option value="10">±10% (Prateado)</option>
+        </select>
+        <button onclick="updateResistor()" aria-label="Mostrar cores do resistor">Mostrar Cores</button>
+
+        <div id="errorMessage" class="error"></div>
+
+        <h2>Demonstração do Resistor</h2>
+        <div class="resistor-display">
+            <div id="band1" class="band" aria-label="Primeira faixa"></div>
+            <div id="band2" class="band" aria-label="Segunda faixa"></div>
+            <div id="band3" class="band" aria-label="Terceira faixa"></div>
+            <div id="band4" class="band" aria-label="Quarta faixa (tolerância)"></div>
+        </div>
+
+        <h2>Calculadora Reversa (Selecione as Cores)</h2>
+        <div class="color-palette">
+            <div style="background-color: black;" onclick="selectColor('black', 0)"></div>
+            <div style="background-color: brown;" onclick="selectColor('brown', 1)"></div>
+            <div style="background-color: red;" onclick="selectColor('red', 2)"></div>
+            <div style="background-color: orange;" onclick="selectColor('orange', 3)"></div>
+            <div style="background-color: yellow;" onclick="selectColor('yellow', 4)"></div>
+            <div style="background-color: green;" onclick="selectColor('green', 5)"></div>
+            <div style="background-color: blue;" onclick="selectColor('blue', 6)"></div>
+            <div style="background-color: violet;" onclick="selectColor('violet', 7)"></div>
+            <div style="background-color: gray;" onclick="selectColor('gray', 8)"></div>
+            <div style="background-color: white;" onclick="selectColor('white', 9)"></div>
+            <div style="background-color: gold;" onclick="selectColor('gold', 0.1)"></div>
+            <div style="background-color: silver;" onclick="selectColor('silver', 0.01)"></div>
+        </div>
+
+        <div class="unit-conversion">
+            <h2>Valor Calculado</h2>
+            <p id="calculatedValue">0 Ω</p>
+            <p id="convertedValue">0 kΩ | 0 MΩ</p>
+        </div>
+
+        <h2>Tabela de Código de Cores</h2>
+        <table>
+            <tr>
+                <th>Cor</th>
+                <th>Valor</th>
+                <th>Multiplicador</th>
+                <th>Tolerância</th>
+            </tr>
+            <tr>
+                <td style="background-color: black; color: white;">Preto</td>
+                <td>0</td>
+                <td>1</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td style="background-color: brown; color: white;">Marrom</td>
+                <td>1</td>
+                <td>10</td>
+                <td>±1%</td>
+            </tr>
+            <tr>
+                <td style="background-color: red; color: white;">Vermelho</td>
+                <td>2</td>
+                <td>100</td>
+                <td>±2%</td>
+            </tr>
+            <tr>
+                <td style="background-color: orange; color: white;">Laranja</td>
+                <td>3</td>
+                <td>1.000</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td style="background-color: yellow; color: black;">Amarelo</td>
+                <td>4</td>
+                <td>10.000</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td style="background-color: green; color: white;">Verde</td>
+                <td>5</td>
+                <td>100.000</td>
+                <td>±0.5%</td>
+            </tr>
+            <tr>
+                <td style="background-color: blue; color: white;">Azul</td>
+                <td>6</td>
+                <td>1.000.000</td>
+                <td>±0.25%</td>
+            </tr>
+            <tr>
+                <td style="background-color: violet; color: white;">Violeta</td>
+                <td>7</td>
+                <td>10.000.000</td>
+                <td>±0.1%</td>
+            </tr>
+            <tr>
+                <td style="background-color: gray; color: white;">Cinza</td>
+                <td>8</td>
+                <td>100.000.000</td>
+                <td>±0.05%</td>
+            </tr>
+            <tr>
+                <td style="background-color: white; color: black;">Branco</td>
+                <td>9</td>
+                <td>1.000.000.000</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td style="background-color: gold; color: black;">Dourado</td>
+                <td>-</td>
+                <td>0.1</td>
+                <td>±5%</td>
+            </tr>
+            <tr>
+                <td style="background-color: silver; color: black;">Prateado</td>
+                <td>-</td>
+                <td>0.01</td>
+                <td>±10%</td>
+            </tr>
+        </table>
+
+        <h2>Como Ler o Código de Cores</h2>
+        <p>Para ler o valor de um resistor, siga estas etapas:</p>
+        <ol>
+            <li>Identifique a primeira faixa de cor, que representa o primeiro dígito do valor.</li>
+            <li>Identifique a segunda faixa de cor, que representa o segundo dígito do valor.</li>
+            <li>Identifique a terceira faixa de cor, que representa o multiplicador.</li>
+            <li>Identifique a quarta faixa de cor (se houver), que representa a tolerância.</li>
+        </ol>
+    </div>
+
+   <script src="resistor.js"></script>
+
+</body>
+</html>
